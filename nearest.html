@@ -95,8 +95,8 @@ Author URL: http://w3layouts.com
 			}
 			async function onGeolocateSuccess(coordinates) {
 				const { latitude, longitude } = coordinates.coords;
-				// lat = latitude;
-				// long = longitude;
+				lat = latitude;
+				long = longitude;
 				console.log("Found coordinates: ", latitude, longitude);
 				var map = new MapmyIndia.Map("map", { center: [lat, long], zoomControl: true, hybrid: true });
 				L.marker([lat, long]).addTo(map);
