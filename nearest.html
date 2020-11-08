@@ -1,0 +1,152 @@
+<!--
+Author: W3layouts
+Author URL: http://w3layouts.com
+-->
+<!doctype html>
+<html lang="zxx">
+
+	<head>
+		<!-- Required meta tags -->
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		<title>MedicoBot by Team Error404
+		</title>
+		<!-- Template CSS -->
+		<link rel="stylesheet" href="assets/css/style-starter.css">
+		<!-- Template CSS -->
+		<link href="//fonts.googleapis.com/css?family=Poppins:300,400,400i,500,600,700&display=swap" rel="stylesheet">
+		<!-- Template CSS -->
+		<script src="https://unpkg.com/axios/dist/axios.min.js"> </script>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+		<script
+			src="https://apis.mapmyindia.com/advancedmaps/v1/jgapt8g783ryybjqhoiddci24j36ajot/map_load?v=1.3"></script>
+		</script>
+		<!-- <script src="assets/js/mapMyIndia.js">
+
+		</script> -->
+		<!-- <script src="assets/js/nearestDoctor.js"></script> -->
+		<style>
+			html,
+			body,
+			#map {
+				margin: 0;
+				padding: 0;
+				width: 100%;
+				height: 100%;
+			}
+
+			.info_css {
+				color: #000;
+				text-decoration: none;
+				background-color: #fff;
+				width: 270px;
+				padding: 5px;
+				font-size: 12px;
+			}
+
+			div.header {
+				position: relative;
+				background-color: #191919;
+				color: #fff;
+				line-height: 20px;
+				font-size: 13px;
+				vertical-align: middle;
+				padding: 5px 35px 5px 5px;
+			}
+
+		</style>
+	</head>
+
+	<body>
+		<div id="map"></div>;
+		<script>
+			var create_content = function (first, second, third, fourth) {
+				var h = new Array();
+				h.push("<div>");
+				h.push("<div class=\"info_css\">");
+				h.push("<span>");
+				h.push(`<b>Sr No.</b>: ${fourth}`);
+				h.push("</span> ");
+				h.push("</div>");
+				h.push("<div class=\"info_css\">");
+				h.push("<span>");
+				h.push(`<b>Health Facility Name</b>: ${first}`);
+				h.push("</span> ");
+				h.push("</div>");
+				h.push("<div class=\"info_css\">");
+				h.push(`<b>Tehsil Name</b>: ${second}`);
+				h.push("</div>");
+				h.push("<div class=\"info_css\">");
+				h.push("<span>");
+				h.push(`<b>District Name</b>: ${third}`);
+				h.push("</span> ");
+				h.push("</div>");
+				h.push("</div>");
+				return h.join("");
+			};
+			var lat = 29.1393, long = 76.6945, token;
+			function geolocate() {
+				if (window.navigator && window.navigator.geolocation) {
+					navigator.geolocation.getCurrentPosition(
+						onGeolocateSuccess,
+						onGeolocateError
+					);
+				}
+			}
+			async function onGeolocateSuccess(coordinates) {
+				const { latitude, longitude } = coordinates.coords;
+				// lat = latitude;
+				// long = longitude;
+				console.log("Found coordinates: ", latitude, longitude);
+				var map = new MapmyIndia.Map("map", { center: [lat, long], zoomControl: true, hybrid: true });
+				L.marker([lat, long]).addTo(map);
+				const hospital = await fetch(`https://fierce-crag-87115.herokuapp.com/location/${lat},${long}`)
+				const hospitalData = await hospital.json()
+				console.log(hospitalData)
+				var mk = await L.marker([hospitalData.latitude, hospitalData.longitude], { title: hospitalData["SrNo"] })
+				await map.addLayer(mk);
+				var content = await create_content(hospitalData["Health Facility Name"], hospitalData["Taluka_Name"], hospitalData["District_Name"], hospitalData["SrNo"]);
+				await mk.bindPopup(content);
+				await mk.openPopup();
+
+			}
+
+			function onGeolocateError(error) {
+				var map = new MapmyIndia.Map("map", { center: [29.1393, 76.6945], zoomControl: true, hybrid: true });
+				L.marker([29.1393, 76.6945]).addTo(map);
+
+				if (error.code === 1) {
+					alert('Please Allow Location Access')
+				} else if (error.code === 2) {
+					alert("Please Allow Location Access");
+				} else if (error.code === 3) {
+					alert("Please Allow Location Access");
+				}
+			}
+			geolocate();
+		</script> -->
+
+	</body>
+
+</html>
+
+<script src="assets/js/jquery-3.3.1.min.js"></script>
+
+<script>
+	$(function () {
+		$('.navbar-toggler').click(function () {
+			$('body').toggleClass('noscroll');
+		})
+	});
+</script>
+<!--/scroll-down-JS-->
+<!-- stats -->
+<script src="assets/js/jquery.waypoints.min.js"></script>
+<script src="assets/js/jquery.countup.js"></script>
+<script>
+	$('.counter').countUp();
+</script>
+<!-- //stats -->
+<!-- //script -->
+
+<script src="assets/js/bootstrap.min.js"></script>
